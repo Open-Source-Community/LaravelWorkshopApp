@@ -83,6 +83,7 @@ class UserController extends Controller
     {
         $item = User::find($id);
         $item->delete();
-        return view('index');
+
+        return redirect('users');
     }
 }

@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 5px;
-        }
-
-        th {
-            text-align: left;
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>All users</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/bootstrap.css') }}">
 </head>
 <body>
 
-<table style="width:100%">
+<table class="table table-striped">
+    <thead>
     <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Email</th>
         <th>Number</th>
         <th>Delete Method</th>
     </tr>
-
-    @for ($i = 0; $i < count($users); $i++)
+    </thead>
+    <tbody>
+    @foreach($users as $user)
         <tr>
-            <td>{{$users[$i]->name}}</td>
-            <td>{{$users[$i]->email}}</td>
-            <td>{{$users[$i]->number}}</td>
-            <td><a href="users/{{$users[$i]->id}}/delete">Delete</a></td>
+            <td>{{$user->id}}</td>
+            <td>{{$user->name}}</td>
+            <td>{{$user->email}}</td>
+            <td>{{$user->number}}</td>
+            <td>
+                <form method="post" action="{{ url("users/$user->id")}}">
+                    {{ method_field('DELETE') }}
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger label-sm">Delete</button>
+
+                </form>
+            </td>
         </tr>
-    @endfor
+    @endforeach
+    </tbody>
 </table>
 
 </body>
