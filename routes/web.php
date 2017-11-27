@@ -11,8 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('users');
-});
 
-Route::resource('users', 'UserController');
+Route::resource('/users', 'UserController');

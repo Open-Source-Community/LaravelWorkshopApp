@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view("create");
     }
 
     /**
@@ -36,7 +36,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        /*
+            Easy store
+           User::create($request->all());
+           this line add new user to DB instead of all this lines
+            and u should add $fillable in your model
+
+        */
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->number = $request->number;
+        $user->save();
+        return redirect("users");
     }
 
     /**
@@ -47,7 +61,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('show', compact('user'));
     }
 
     /**
@@ -58,7 +73,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view("edit", compact('user'));
     }
 
     /**
@@ -70,7 +86,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        /*
+           Easy update
+          User::update($request->all());
+          this line add update user instead of all this lines
+           and u should add $fillable in your model
+
+       */
+
+        $user = User::find($id);
+        $user->name =$request->name;
+        $user->email =$request->email;
+        $user->number =$request->number;
+        $user->save();
+        return redirect("users");
     }
 
     /**
@@ -83,7 +113,6 @@ class UserController extends Controller
     {
         $item = User::find($id);
         $item->delete();
-
         return redirect('users');
     }
 }
